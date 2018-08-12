@@ -3,7 +3,7 @@ header('Content-Type: text/html; charset=utf-8'); ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 
-<head>      <style>
+<head>   <meta charset="utf-8">   <style>
         table, th, td{
             border: 0.1px solid black;
         }
@@ -20,7 +20,7 @@ header('Content-Type: text/html; charset=utf-8'); ?>
             <td> <p class="title"><?php echo $array['id'];?></p></td>
             <td> <p class="title"><?php echo $array['email'];?></p></td>
             <td> <p class="title"><?php echo $array['text'];?></p></td>
-
+            <td> <a href = 'index.php/admin/edit/<?php echo $array['id'];?>'>Редактировать</a></td>
         </tr>
     <?php endforeach; ?>
 
