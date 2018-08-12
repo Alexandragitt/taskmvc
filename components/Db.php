@@ -1,7 +1,8 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Alexandra
- * Date: 12.08.2018
- * Time: 11:40
- */
+class Db
+{
+    public static function getConnection(){
+        $db = new PDO('mysql:host=localhost;dbname=city', 'root','' );
+        return $db;
+    }
+}
