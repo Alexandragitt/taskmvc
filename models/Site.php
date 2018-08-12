@@ -16,7 +16,17 @@ class Site
         $result->bindParam(':page', $page, PDO::PARAM_INT );
         $arrayTasks=$result->execute();
         $arrayTasks = $result->fetchAll();
-
         return $arrayTasks;
     }
+    public static function insertTask($data){
+        $db=Db::getConnection();
+        $new= $db->prepare("INSERT INTO mvc (email, text) 
+                            VALUES(:email, :text)");
+        $new->bindParam(':email', $data['email']);
+        $new->bindParam(':text', $data['text']);
+        $result=$new->execute();
+        $result=$new->fetchAll();
+        return $result;
+    }
+
 }

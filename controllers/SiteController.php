@@ -13,11 +13,18 @@ class SiteController
         $arrayTasks=array();
         $arrayTasks=Site::getArrayTasks($page);
         require_once ('/../views/Site/index.php');
-        return true;
+        if(!empty($_POST)){
+            foreach ($_POST as $key => $value) {
+                $value = htmlspecialchars($value);
+                $value = stripcslashes($value);
+                $newTask[$key] = $value;
+            }
+            Site::insertTask($newTask);
+        }
 
 
-    }
-
+return true;
+        }
 
 
 }
