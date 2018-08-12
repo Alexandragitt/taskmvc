@@ -8,7 +8,15 @@ require_once('components/Router.php');
 //3.Установка сосединения с БД
 require_once('components/Db.php');
 
-//4. Вызов Router
-$router=new Router();
-$router->run();
+if($_GET['admin']=1){
+    require_once('controllers/AdminController.php');
+    $admin= new AdminController();
+    $admin->adminAction();
+} else{
+    $router=new Router();
+    $router->run();
+}
+
+
+
 ?>
