@@ -31,6 +31,12 @@ class Admin
         $result->bindParam(':id', $id );
         $update=$result->execute();
         return true;
-
+    }
+    public static function deleteElement($id){
+        $db=Db::getConnection();
+        $result = $db->prepare("DELETE FROM `mvc` WHERE `id` = :id");
+        $result->bindParam(':id', $id );
+        $result->execute();
+        return true;
     }
 }

@@ -14,15 +14,22 @@ header('Content-Type: text/html; charset=utf-8'); ?>
         <th>ID </th>
         <th>Email</th>
         <th>Text</th>
+        <th>Action</th>
     </tr>
     <?php foreach ($arrayTasks as $key=> $array):?>
         <tr>
-            <td> <p class="title"><?php echo $array['id'];?></p></td>
-            <td> <p class="title"><?php echo $array['email'];?></p></td>
-            <td> <p class="title"><?php echo $array['text'];?></p></td>
-            <td> <a href = 'index.php/admin/edit/<?php echo $array['id'];?>'>Редактировать</a></td>
+            <td> <p ><?php echo $array['id'];?></p></td>
+            <td> <p ><?php echo $array['email'];?></p></td>
+            <td> <p ><?php echo $array['text'];?></p></td>
+            <td> <a href = 'index.php/admin/edit/<?php echo $array['id'];?>'>Редактировать</a>
+
+                <form action='/index.php/admin/delete/<?php echo $array['id'];?>' method='post'>
+                    <button type='submit' value ='delete'>Удалить</button>
+                </form>
+        </td>
         </tr>
     <?php endforeach; ?>
+
 
 </table>
 

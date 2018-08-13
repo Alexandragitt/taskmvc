@@ -11,7 +11,7 @@ require_once('components/Db.php');
 if((!empty($_GET['admin'])) and ($_GET['admin']==1)){
     require_once('controllers/AdminController.php');
     $admin= new AdminController();
-    $admin->actionAdmin();
+    $admin->actionIndex();
 } else{
     $router=new Router();
     $router->run();

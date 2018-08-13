@@ -10,10 +10,11 @@
 
           <p><input type="text" name="email"  value="<?php echo $element[0]['email']; ?>"></p>
         <p>   <input type="text" name="text" value="<?php echo $element[0]['text']; ?>"></p>
-        <p>    <input type="submit" name=""  value="Сохранить"></p>
-
-
+        <p>     <a href = 'index.php/admin/edit/<?php echo $element[0]['id'];?>'>Сохранить</a></p>
     </form>
+        <form action='/index.php/admin/delete/<?php echo $element[0]['id'];?>' method='post'>
+            <button type='submit' value =<?php echo $element[0]['id'];?>>Удалить</button>
+        </form>
 
 </table>
 
