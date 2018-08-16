@@ -1,16 +1,19 @@
 <?php
 require_once ('/models/Site.php');
+require_once ('/models/UploadForm.php');
 class SiteController
 {
+    const COUNTELEMENT=3;
 
 
     public function actionIndex($page = 1)
     {
-        $numberPage = ($page - 1) * 3;
+        $numberPage = ($page - 1) * self::COUNTELEMENT;
         $page = (int)$numberPage;
         $newCountTasks = Site::getCountTasks();
-        $countPage = $newCountTasks[0] / 3;
+        $countPage = $newCountTasks[0] / self::COUNTELEMENT;
         $countPage = ceil($countPage);
+        $uploadForm = new UploadForm();
 
         $arrayTasks = Site::getArrayTasks($page);
         require_once('/../views/Site/index.php');
@@ -22,12 +25,10 @@ class SiteController
             }
             if (!empty($_FILES)) {
                 $uploadsDir = ROOT . '\uploads';
-                $fileName = md5($_FILES["file"]["name"] . Uniqid());
-                $targetFile = $uploadsDir . '\\' . $fileName . '.jpeg';
-                var_dump($targetFile);
+                $fileName= $uploadForm->hash($_FILES["file"]["name"]);
+                $targetFile= $uploadForm->getNewFileTarget($fileName, $uploadsDir);
                 if ($_FILES['file']['error'] == 0) {
-                    if (move_uploaded_file($_FILES['file']['tmp_name'], $targetFile)
-                        && is_writable($uploadsDir)) {
+                    if ($uploadForm->uploadFile($_FILES['file']['tmp_name'], $targetFile)) {
                         Site::insertTask($newTask, $fileName);
                         echo 'Создана задача';
                     } else {
