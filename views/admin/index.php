@@ -9,6 +9,7 @@ header('Content-Type: text/html; charset=utf-8'); ?>
         }
     </style></head>
 <body>
+
 <table>
     <tr>
         <th>ID </th>
@@ -21,6 +22,7 @@ header('Content-Type: text/html; charset=utf-8'); ?>
             <td> <p ><?php echo $array['id'];?></p></td>
             <td> <p ><?php echo $array['email'];?></p></td>
             <td> <p ><?php echo $array['text'];?></p></td>
+
             <td> <a href = 'index.php/admin/edit/<?php echo $array['id'];?>'>Редактировать</a>
 
                 <form action='/index.php/admin/delete/<?php echo $array['id'];?>' method='post'>

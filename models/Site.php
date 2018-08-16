@@ -18,14 +18,15 @@ class Site
         $arrayTasks = $result->fetchAll();
         return $arrayTasks;
     }
-    public static function insertTask($data){
+    public static function insertTask($data, $filename){
         $db=Db::getConnection();
-        $new= $db->prepare("INSERT INTO mvc (email, text) 
-                            VALUES(:email, :text)");
+        $new= $db->prepare("INSERT INTO mvc (email, text, img) 
+                            VALUES(:email, :text, :img)");
         $new->bindParam(':email', $data['email']);
         $new->bindParam(':text', $data['text']);
+        $new->bindParam(':img', $filename);
         $result=$new->execute();
-        $result=$new->fetchAll();
+        //$result=$new->fetchAll();
         return $result;
     }
 

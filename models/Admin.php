@@ -23,12 +23,13 @@ class Admin
         $getElement = $result->fetchAll();
         return $getElement;
     }
-    public static function updateElment($id,$email,$text){
+    public static function updateElment($id,$email,$text, $nameImage){
         $db=Db::getConnection();
-        $result = $db->prepare("UPDATE mvc SET `email`=:email,`text`=:text where id=:id");
+        $result = $db->prepare("UPDATE mvc SET `email`=:email,`text`=:text,`img`=:name where id=:id");
         $result->bindParam(':email', $email );
         $result->bindParam(':text', $text );
         $result->bindParam(':id', $id );
+        $result->bindParam(':name', $nameImage);
         $update=$result->execute();
         return true;
     }
@@ -39,4 +40,10 @@ class Admin
         $result->execute();
         return true;
     }
+    public static function uploadImage($name){
+
+
+
+    }
+
 }

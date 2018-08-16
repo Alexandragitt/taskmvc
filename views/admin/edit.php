@@ -6,17 +6,16 @@
 <body>
 <p>Task id: <?php echo $element[0]['id']; ?></p>
 
-    <form action="" method="post">
+    <form  action='/index.php/admin/edit/<?php echo $element[0]['id'];?>' enctype='multipart/form-data' method='post'>
 
           <p><input type="text" name="email"  value="<?php echo $element[0]['email']; ?>"></p>
         <p>   <input type="text" name="text" value="<?php echo $element[0]['text']; ?>"></p>
-        <p>     <a href = 'index.php/admin/edit/<?php echo $element[0]['id'];?>'>Сохранить</a></p>
+        <input name="file" type="file"  >
+        <p>       <button type='submit' value ='<?php echo $element[0]['id'];?>'>Сохранить</button></p>
     </form>
         <form action='/index.php/admin/delete/<?php echo $element[0]['id'];?>' method='post'>
-            <button type='submit' value =<?php echo $element[0]['id'];?>>Удалить</button>
+            <button type='submit' value ='<?php echo $element[0]['id'];?>'>Удалить</button>
         </form>
-
-</table>
 
 </form>
 </body>

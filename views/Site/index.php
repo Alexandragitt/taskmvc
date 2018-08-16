@@ -9,7 +9,7 @@
         }
     </style></head>
 <body>
-<form action="" method="post">
+<form action="/index.php"  enctype='multipart/form-data' method="post">
        <p>
         <label>Введите email </label>
         <input type="text" name="email" >
@@ -18,6 +18,7 @@
         <label>Введите текст</label>
         <input type="text" name="text" >
     </p>
+    <input name="file" type="file"  >
     <p>
         <input type="submit" name="" value="Добавить">
     </p></form>
@@ -32,7 +33,7 @@
         <td> <p class="title"><?php echo $array['id'];?></p></td>
         <td> <p class="title"><?php echo $array['email'];?></p></td>
         <td> <p class="title"><?php echo $array['text'];?></p></td>
-
+        <td> <img src="/uploads/<?php echo $array['img'];?>.jpeg" width="100" height="100" alt="картинка"></td>
     </tr>
 <?php endforeach; ?>
 
