@@ -8,7 +8,8 @@ class SiteController
 
     public function actionIndex($page = 1)
     {
-        $numberPage = (int) ($page - 1) * self::COUNTELEMENT;
+        $page = (int)$page;
+        $numberPage = ($page - 1) * self::COUNTELEMENT;
         $page = $numberPage;
         $newCountTasks = Site::getCountTasks();
         $countPage = $newCountTasks[0] / self::COUNTELEMENT;
