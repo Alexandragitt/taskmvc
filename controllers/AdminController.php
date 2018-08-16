@@ -5,8 +5,30 @@ class AdminController
     public function actionIndex(){
         $arrayTasks=Admin::getArrayTasks();
         require_once ('/../views/admin/index.php');
+        if (!empty($_POST)) {
+            $newTask= array();
+            foreach ($_POST as $key => $value) {
+                $value = htmlspecialchars($value);
+                $value = stripcslashes($value);
+                $newTask[$key] = $value;
+            }
+            if (!empty($_FILES)) {
+                $uploadsDir = ROOT . '\uploads';
+                $fileName = md5($_FILES["file"]["name"] . Uniqid());
+                $targetFile = $uploadsDir . '\\' . $fileName . '.jpeg';
+                var_dump($targetFile);
+                if ($_FILES['file']['error'] == 0) {
+                    if (move_uploaded_file($_FILES['file']['tmp_name'], $targetFile)
+                        && is_writable($uploadsDir)) {
+                        Admin::insertElement($newTask, $fileName);
+                        echo 'Создана задача';
+                    } else {
+                        echo 'Не удалось осуществить создание задачи';
+                    }
+                }
+            }
         return true;
-    }
+    }}
     public function actionEdit($id){
         $element=array();
         $element= Admin::getElementByID($id);

@@ -9,12 +9,26 @@ header('Content-Type: text/html; charset=utf-8'); ?>
         }
     </style></head>
 <body>
-
+<form action="/index.php?admin=1"  enctype='multipart/form-data' method="post">
+    <p>
+        <label>Введите email </label>
+        <input type="text" name="email" >
+    </p>
+    <p>
+        <label>Введите текст</label>
+        <input type="text" name="text" >
+    </p>
+    <input name="file" type="file"  >
+    <p>
+        <input type="submit" name="" value="Добавить">
+    </p></form>
+</table>
 <table>
     <tr>
         <th>ID </th>
         <th>Email</th>
         <th>Text</th>
+        <th>Image</th>
         <th>Action</th>
     </tr>
     <?php foreach ($arrayTasks as $key=> $array):?>
@@ -22,7 +36,7 @@ header('Content-Type: text/html; charset=utf-8'); ?>
             <td> <p ><?php echo $array['id'];?></p></td>
             <td> <p ><?php echo $array['email'];?></p></td>
             <td> <p ><?php echo $array['text'];?></p></td>
-
+            <td>  <img src="/uploads/<?php echo $array['img'];?>.jpeg" width="100" height="100" alt="картинка"></td>
             <td> <a href = 'index.php/admin/edit/<?php echo $array['id'];?>'>Редактировать</a>
 
                 <form action='/index.php/admin/delete/<?php echo $array['id'];?>' method='post'>

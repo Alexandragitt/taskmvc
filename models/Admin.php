@@ -40,7 +40,15 @@ class Admin
         $result->execute();
         return true;
     }
-    public static function uploadImage($name){
+    public static function insertElement($data, $fileName){
+        $db=Db::getConnection();
+        $new= $db->prepare("INSERT INTO mvc (email, text, img) 
+                            VALUES(:email, :text, :img)");
+        $new->bindParam(':email', $data['email']);
+        $new->bindParam(':text', $data['text']);
+        $new->bindParam(':img', $filename);
+        $result=$new->execute();
+        return $result;
 
 
 

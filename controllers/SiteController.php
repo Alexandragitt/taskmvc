@@ -11,14 +11,13 @@ class SiteController
         $newCountTasks = Site::getCountTasks();
         $countPage = $newCountTasks[0] / 3;
         $countPage = ceil($countPage);
-        $arrayTasks = array();
+
         $arrayTasks = Site::getArrayTasks($page);
         require_once('/../views/Site/index.php');
         if (!empty($_POST)) {
             $newTask= array();
             foreach ($_POST as $key => $value) {
-                $value = htmlspecialchars($value);
-                $value = stripcslashes($value);
+                $value = htmlspecialchars(strip_tags(trim($value)));
                 $newTask[$key] = $value;
             }
             if (!empty($_FILES)) {
