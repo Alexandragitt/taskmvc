@@ -29,5 +29,9 @@ class Site
         //$result=$new->fetchAll();
         return $result;
     }
+    public static function explodeType($string){
+        $segments = explode('/', $string);
+        return $segments[1];
+    }
 
 }

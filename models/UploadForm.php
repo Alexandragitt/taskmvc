@@ -2,7 +2,7 @@
 class UploadForm{
 
     public static function hash($name){
-        $fileName = md5($name . Uniqid());
+        $fileName = md5($name . uniqid());
         return $fileName;
 
     }

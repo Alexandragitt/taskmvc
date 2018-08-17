@@ -32,8 +32,8 @@ class AdminController
     public function actionEdit($id){
         $element=array();
         $element= Admin::getElementByID($id);
+        reset($element);
         //var_dump($element);
-
         if(!empty($_POST['email']) and !empty($_POST['text']) ){
             $post= $_POST;
             var_dump($_FILES);
