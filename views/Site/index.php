@@ -27,6 +27,7 @@
         <th>ID </th>
         <th>Email</th>
         <th>Text</th>
+        <th>Image</th>
     </tr>
 <?php foreach ($arrayTasks as $key=> $array):?>
     <tr>

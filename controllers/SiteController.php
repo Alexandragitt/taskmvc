@@ -34,14 +34,14 @@ class SiteController
                 if ($_FILES['file']['error'] == 0) {
                     if (UploadForm::uploadFile($_FILES['file']['tmp_name'], $targetFile)) {
                         Site::insertTask($newTask, $fileName);
-                        Site::explodeType($_FILES["file"]["type"]);
                         echo 'Создана задача';
                     } else {
                         echo 'Не удалось осуществить создание задачи';
                     }
                 }
             }   else{
-                    echo 'Выберите пожалуйста картинку';
+                    var_dump($_FILES);
+                    echo 'Выберите файл формата .jpeg, .png';
                 }
 
         }
