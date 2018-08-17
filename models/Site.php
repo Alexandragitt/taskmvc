@@ -26,12 +26,11 @@ class Site
         $new->bindParam(':text', $data['text']);
         $new->bindParam(':img', $filename);
         $result=$new->execute();
-        //$result=$new->fetchAll();
         return $result;
     }
     public static function explodeType($string){
         $segments = explode('/', $string);
-        return $segments[1];
+        return end($segments);
     }
 
 }

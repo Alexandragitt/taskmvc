@@ -1,35 +1,36 @@
 <?php
 require_once ('/models/Admin.php');
 
+require_once ('/models/UploadString.php');
 require_once ('/models/UploadForm.php');
 class AdminController
 {
+    protected $newTask = [];
+    protected $typesElement= ['jpeg','jpg','png'];
     public function actionIndex(){
         $arrayTasks=Admin::getArrayTasks();
         require_once ('/../views/admin/index.php');
         if (!empty($_POST) and !empty($_FILES)) {
-            $typesElement= ['jpeg','jpg','png'];
             $typeImage= Site::explodeType($_FILES["file"]["type"]);
-            if (in_array($typeImage, $typesElement)){
-                $newTask = array();
+            if (in_array($typeImage, $this->typesElement)){
+
                 foreach ($_POST as $key => $value) {
-                    $value = htmlspecialchars(strip_tags(trim($value)));
-                    $newTask[$key] = $value;
+                    $value = UploadString::cutString($value);
+                    $this->newTask[$key] = $value;
                 }
                 $uploadsDir = ROOT . '\uploads';
                 $fileName = UploadForm::hash($_FILES["file"]["name"]);
-                $targetFile =UploadForm::getNewFileTarget($fileName, $uploadsDir);
-                var_dump($_FILES);
+                $targetFile = UploadForm::getNewFileTarget($fileName, $uploadsDir);
+
                 if ($_FILES['file']['error'] == 0) {
                     if (UploadForm::uploadFile($_FILES['file']['tmp_name'], $targetFile)) {
-                        Admin::insertElement($newTask, $fileName);
+                        Admin::insertElement($this->newTask, $fileName);
                         echo 'Создана задача';
                     } else {
                         echo 'Не удалось осуществить создание задачи';
                     }
                 }
             }   else{
-                var_dump($_FILES);
                 echo 'Выберите файл формата .jpeg, .png';
             }
 
@@ -37,31 +38,35 @@ class AdminController
 
     }
     public function actionEdit($id){
-        $element=array();
-        $element= Admin::getElementByID($id);
-        reset($element);
-        //var_dump($element);
-        if(!empty($_POST['email']) and !empty($_POST['text']) ){
-            $post= $_POST;
-            var_dump($_FILES);
-        if(!empty($_FILES)) {
-            $uploadsDir = ROOT . '\uploads';
-            $fileName= md5($_FILES["file"]["name"] . Uniqid());
-            $targetFile = $uploadsDir .'\\'. $fileName .'.jpeg';
-            var_dump($targetFile);
-            if ($_FILES['file']['error'] == 0) {
-                if (move_uploaded_file($_FILES['file']['tmp_name'], $targetFile)
-                    && is_writable($uploadsDir)) {
-                    Admin::updateElment($id, $post['email'], $post['text'], $fileName);
-                    echo 'Данные сохранены';
-                } else {
-                    echo 'Не удалось осуществить сохранение файла';
-                }
-            }
-        }
-        }
+        $elements = Admin::getElementByID($id);
+        $elements = reset($elements);
         require_once ('/../views/admin/edit.php');
-        return true;
+
+        if (!empty($_POST) and !empty($_FILES)) {
+            $typeImage= Admin::explodeType($_FILES["file"]["type"]);
+            if (in_array($typeImage, $this->typesElement)){
+
+                foreach ($_POST as $key => $value) {
+                    $value = UploadString::cutString($value);
+                    $this->newTask[$key] = $value;
+                }
+                $uploadsDir = ROOT . '\uploads';
+                $fileName = UploadForm::hash($_FILES["file"]["name"]);
+                $targetFile = UploadForm::getNewFileTarget($fileName, $uploadsDir);
+
+                if ($_FILES['file']['error'] == 0) {
+                    if (UploadForm::uploadFile($_FILES['file']['tmp_name'], $targetFile)) {
+                        Admin::updateElement( $this->newTask, $fileName);
+                        echo 'Задача изменена';
+                    } else {
+                        echo 'Не удалось осуществить создание задачи';
+                    }
+                }
+            }   else{
+                echo 'Выберите файл формата .jpeg, .png';
+            }
+
+        }
     }
     public function actionDelete($id){
 

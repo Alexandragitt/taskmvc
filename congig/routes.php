@@ -6,7 +6,7 @@ return array(
     //главная стр
     'site'=> 'site/index',
     'index.php/site/([0-9]+)'=> 'site/index/$1',
-    'index.php'=> 'site/index',
+
     'index.php/admin/delete/([0-9]+)' =>'admin/delete/$1'
 
 

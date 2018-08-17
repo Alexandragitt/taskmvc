@@ -1,10 +1,11 @@
 <?php
 require_once ('/models/Site.php');
 require_once ('/models/UploadForm.php');
+require_once ('/models/UploadString.php');
 class SiteController
 {
     const COUNTELEMENT = 3;
-    //public $typesElement= ['jpeg','jpg','png'];
+    protected $typesElement= ['jpeg','jpg','png'];
 
 
     public function actionIndex($page = 1)
@@ -13,18 +14,17 @@ class SiteController
         $numberPage = ($page - 1) * self::COUNTELEMENT;
         $page = $numberPage;
         $newCountTasks = Site::getCountTasks();
-        reset($newCountTasks);
+       // reset($newCountTasks);
         $countPage = $newCountTasks[0] / self::COUNTELEMENT;
         $countPage = ceil($countPage);
         $arrayTasks = Site::getArrayTasks($page);
         require_once('/../views/Site/index.php');
         if (!empty($_POST) and !empty($_FILES)) {
-            $typesElement= ['jpeg','jpg','png'];
             $typeImage= Site::explodeType($_FILES["file"]["type"]);
-                if (in_array($typeImage, $typesElement)){
+                if (in_array($typeImage, $this->typesElement)){
                     $newTask = array();
             foreach ($_POST as $key => $value) {
-                $value = htmlspecialchars(strip_tags(trim($value)));
+                $value = UploadString::cutString($value);
                 $newTask[$key] = $value;
             }
                 $uploadsDir = ROOT . '\uploads';

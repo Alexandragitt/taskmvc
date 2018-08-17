@@ -4,17 +4,19 @@
 
 <head>    <meta charset="utf-8">  </head>
 <body>
-<p>Task id: <?php echo $element['id']; ?></p>
+<p>Task id: <?php echo $elements['id']; ?></p>
 
-    <form  action='/index.php/admin/edit/<?php echo $element['id'];?>' enctype='multipart/form-data' method='post'>
+    <form  action='/index.php/admin/edit/<?php echo $elements['id'];?>' enctype='multipart/form-data' method='post'>
 
-          <p><input type="text" name="email"  value="<?php echo $element['email']; ?>"></p>
-        <p>   <input type="text" name="text" value="<?php echo $element['text']; ?>"></p>
+          <p><input type="text" name="email"  value="<?php echo $elements['email']; ?>"></p>
+        <p>   <input type="text" name="text" value="<?php echo $elements['text']; ?>"></p>
+         <img src="/uploads/<?php echo $elements['img'];?>.jpeg" width="100" height="100" alt="картинка">
+
         <input name="file" type="file"  >
-        <p>       <button type='submit' value ='<?php echo $element['id'];?>'>Сохранить</button></p>
+        <p>       <button type='submit' value ='<?php echo $elements['id'];?>'>Сохранить</button></p>
     </form>
-        <form action='/index.php/admin/delete/<?php echo $element['id'];?>' method='post'>
-            <button type='submit' value ='<?php echo $element['id'];?>'>Удалить</button>
+        <form action='/index.php/admin/delete/<?php echo $elements['id'];?>' method='post'>
+            <button type='submit' value ='<?php echo $elements['id'];?>'>Удалить</button>
         </form>
 
 </form>
