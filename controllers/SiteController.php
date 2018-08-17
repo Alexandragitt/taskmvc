@@ -5,46 +5,39 @@ require_once ('/models/UploadString.php');
 class SiteController
 {
     const COUNTELEMENT = 3;
-    protected $typesElement= ['jpeg','jpg','png'];
+    protected $typesElement = ['jpeg', 'jpg', 'png'];
 
 
     public function actionIndex($page = 1)
     {
+        $newTask = [];
         $page = (int)$page;
         $numberPage = ($page - 1) * self::COUNTELEMENT;
         $page = $numberPage;
         $newCountTasks = Site::getCountTasks();
-       // reset($newCountTasks);
+        // reset($newCountTasks);
         $countPage = $newCountTasks[0] / self::COUNTELEMENT;
         $countPage = ceil($countPage);
         $arrayTasks = Site::getArrayTasks($page);
         require_once('/../views/Site/index.php');
         if (!empty($_POST) and !empty($_FILES)) {
-            $typeImage= Site::explodeType($_FILES["file"]["type"]);
-                if (in_array($typeImage, $this->typesElement)){
-                    $newTask = array();
-            foreach ($_POST as $key => $value) {
-                $value = UploadString::cutString($value);
-                $newTask[$key] = $value;
-            }
-                $uploadsDir = ROOT . '\uploads';
+            if (UploadForm::checkExtension($_FILES["file"]["type"])) {
+                foreach ($_POST as $key => $value) {
+                    $value = UploadString::cutString($value);
+                    $newTask[$key] = $value;
+                }
                 $fileName = UploadForm::hash($_FILES["file"]["name"]);
-                $targetFile =UploadForm::getNewFileTarget($fileName, $uploadsDir);
-                var_dump($_FILES);
-                if ($_FILES['file']['error'] == 0) {
-                    if (UploadForm::uploadFile($_FILES['file']['tmp_name'], $targetFile)) {
-                        Site::insertTask($newTask, $fileName);
-                        echo 'Создана задача';
-                    } else {
-                        echo 'Не удалось осуществить создание задачи';
-                    }
+                if (UploadForm::uploadFile($_FILES, $fileName)) {
+                    Site::insertTask($newTask, $fileName);
+                    echo 'Создана задача';
+                } else {
+                    echo 'Не удалось осуществить создание задачи';
                 }
-            }   else{
-                    var_dump($_FILES);
-                    echo 'Выберите файл формата .jpeg, .png';
-                }
-
+            } else {
+                echo 'Нужно выбрать картинку с форматом .jpeg, .png';
+            }
         }
-    }
-}
 
+    }
+
+}
