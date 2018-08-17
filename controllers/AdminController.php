@@ -1,60 +1,55 @@
 <?php
 require_once ('/models/Admin.php');
+
+require_once ('/models/UploadString.php');
+require_once ('/models/UploadForm.php');
 class AdminController
 {
     public function actionIndex(){
+        $newTask = [];
         $arrayTasks=Admin::getArrayTasks();
         require_once ('/../views/admin/index.php');
-        if (!empty($_POST)) {
-            $newTask= array();
-            foreach ($_POST as $key => $value) {
-                $value = htmlspecialchars($value);
-                $value = stripcslashes($value);
-                $newTask[$key] = $value;
-            }
-            if (!empty($_FILES)) {
-                $uploadsDir = ROOT . '\uploads';
-                $fileName = md5($_FILES["file"]["name"] . Uniqid());
-                $targetFile = $uploadsDir . '\\' . $fileName . '.jpeg';
-                var_dump($targetFile);
-                if ($_FILES['file']['error'] == 0) {
-                    if (move_uploaded_file($_FILES['file']['tmp_name'], $targetFile)
-                        && is_writable($uploadsDir)) {
+        if (!empty($_POST) and !empty($_FILES)) {
+            if(UploadForm::checkExtension($_FILES["file"]["type"])){
+                foreach ($_POST as $key => $value) {
+                    $value = UploadString::cutString($value);
+                    $newTask[$key] = $value;
+                }
+                    $fileName = UploadForm::hash($_FILES["file"]["name"]);
+                    if (UploadForm::uploadFile($_FILES, $fileName)) {
                         Admin::insertElement($newTask, $fileName);
                         echo 'Создана задача';
                     } else {
                         echo 'Не удалось осуществить создание задачи';
                     }
                 }
-            }
-        return true;
+          else{
+                echo 'Нужно выбрать картинку с форматом .jpeg, .png';
+        }
     }}
-    public function actionEdit($id){
-        $element=array();
-        $element= Admin::getElementByID($id);
-        //var_dump($element);
 
-        if(!empty($_POST['email']) and !empty($_POST['text']) ){
-            $post= $_POST;
-            var_dump($_FILES);
-        if(!empty($_FILES)) {
-            $uploadsDir = ROOT . '\uploads';
-            $fileName= md5($_FILES["file"]["name"] . Uniqid());
-            $targetFile = $uploadsDir .'\\'. $fileName .'.jpeg';
-            var_dump($targetFile);
-            if ($_FILES['file']['error'] == 0) {
-                if (move_uploaded_file($_FILES['file']['tmp_name'], $targetFile)
-                    && is_writable($uploadsDir)) {
-                    Admin::updateElment($id, $post['email'], $post['text'], $fileName);
-                    echo 'Данные сохранены';
-                } else {
-                    echo 'Не удалось осуществить сохранение файла';
-                }
+    public function actionEdit($id){
+        $newTask = [];
+        $elements = Admin::getElementByID($id);
+        $elements = reset($elements);
+        require_once ('/../views/admin/edit.php');
+        if (!empty($_POST) and !empty($_FILES)) {
+            if(UploadForm::checkExtension($_FILES["file"]["type"])){
+            foreach ($_POST as $key => $value) {
+                $value = UploadString::cutString($value);
+                $newTask[$key] = $value;
+            }
+            $fileName = UploadForm::hash($_FILES["file"]["name"]);
+            if (UploadForm::uploadFile($_FILES, $fileName)) {
+                Admin::updateElement( $newTask, $fileName);
+                echo 'Изменена задача';
+            } else {
+                echo 'Не удалось осуществить изменение задачи';
             }
         }
-        }
-        require_once ('/../views/admin/edit.php');
-        return true;
+         else{
+            echo 'Нужно выбрать картинку с форматом .jpeg, .png';
+        }}
     }
     public function actionDelete($id){
 

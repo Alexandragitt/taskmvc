@@ -23,22 +23,20 @@ class Admin
         $getElement = $result->fetchAll();
         return $getElement;
     }
-    public static function updateElment($id,$email,$text, $nameImage){
+    public static function updateElement($data, $nameImage){
         $db=Db::getConnection();
         $result = $db->prepare("UPDATE mvc SET `email`=:email,`text`=:text,`img`=:name where id=:id");
-        $result->bindParam(':email', $email );
-        $result->bindParam(':text', $text );
-        $result->bindParam(':id', $id );
+        $result->bindParam(':email', $data['email'] );
+        $result->bindParam(':text', $data['text'] );
+        $result->bindParam(':id', $data['id']  );
         $result->bindParam(':name', $nameImage);
-        $update=$result->execute();
-        return true;
+        return $result->execute();;
     }
     public static function deleteElement($id){
         $db=Db::getConnection();
         $result = $db->prepare("DELETE FROM `mvc` WHERE `id` = :id");
         $result->bindParam(':id', $id );
-        $result->execute();
-        return true;
+        return $result->execute();;
     }
     public static function insertElement($data, $fileName){
         $db=Db::getConnection();
@@ -47,11 +45,11 @@ class Admin
         $new->bindParam(':email', $data['email']);
         $new->bindParam(':text', $data['text']);
         $new->bindParam(':img', $filename);
-        $result=$new->execute();
-        return $result;
-
-
-
+        return $new->execute();;
+    }
+    public static function explodeType($string){
+        $segments = explode('/', $string);
+        return end($segments);
     }
 
 }
