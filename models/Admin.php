@@ -57,9 +57,18 @@ class Admin
     public static function getAuthors(){
         $db=Db::getConnection();
         $result = $db->query('SELECT * from authors ');
-        $arrayAuthors = $result->fetchAll(PDO::FETCH_ASSOC);;
+        $arrayAuthors = $result->fetchAll(PDO::FETCH_ASSOC);
         return $arrayAuthors;
 
     }
+    public static function createAuthor($string){
+        $db=Db::getConnection();
+        $new= $db->prepare("INSERT INTO authors (name) 
+                            VALUES(:name)");
+        $new->bindParam(':name', $string);
+        return $new->execute();
+    }
+
+
 
 }

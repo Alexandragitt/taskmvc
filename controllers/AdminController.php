@@ -59,7 +59,12 @@ class AdminController
        if(Admin::deleteElement($id)) {
            header("Location: http://taskmvc/index.php?admin=1");
        }
-       return true;
-
     }
+    public function actionAuthor(){
+        if(!empty($_POST)){
+            $nameAuthor= $_POST['author'];
+        if(Admin::createAuthor($nameAuthor)) {
+            header("Location: http://taskmvc/index.php?admin=1");
+        }
+    }}
 }

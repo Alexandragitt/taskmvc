@@ -9,6 +9,28 @@ header('Content-Type: text/html; charset=utf-8'); ?>
         }
     </style></head>
 <body>
+
+<form action="/index.php/admin/author" method="post">
+    <label>Введите имя автора:</label>
+    <input type="text" name="author" ><input type="submit" name="" value="Создать автора">
+</p>
+</form>
+<table>
+    <tr>
+        <th>ID </th>
+        <th>Name</th>
+
+    </tr>
+    <?php foreach ($arrayAuthors as $key=> $author):?>
+        <tr>
+            <td> <p ><?php echo $author['id'];?></p></td>
+            <td> <p ><?php echo $author['name'];?></p></td>
+        </tr>
+    <?php endforeach; ?>
+</table>
+
+<table >
+<p> Создать задачу:</p>
 <form action="/index.php?admin=1"  enctype='multipart/form-data' method="post">
     <p>
         <label>Введите email </label>
