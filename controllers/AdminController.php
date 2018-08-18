@@ -69,7 +69,7 @@ class AdminController
     }
     public function actionAuthor(){
         if(!empty($_POST)){
-            $nameAuthor= $_POST['author'];
+            $nameAuthor=UploadString::cutString( $_POST['author']);
         if(Admin::createAuthor($nameAuthor)) {
             header("Location: http://taskmvc/index.php?admin=1");
         }
