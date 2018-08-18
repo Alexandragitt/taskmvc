@@ -26,19 +26,20 @@ class Admin
     }
     public static function updateElement($data, $nameImage){
         $db=Db::getConnection();
-        $result = $db->prepare("UPDATE mvc SET `email`=:email,`text`=:text,`img`=:img,`id_author`=:name  where id=:id");
+        $result = $db->prepare("UPDATE mvc SET `email`=:email,`text`=:text,`img`=:img,
+                                            `id_author`=:id_author  where id=:id");
         $result->bindParam(':email', $data['email'] );
         $result->bindParam(':text', $data['text'] );
         $result->bindParam(':id', $data['id']  );
         $result->bindParam(':img', $nameImage);
-        $result->bindParam(':name', $data['id_author'] );
-        return $result->execute();;
+        $result->bindParam(':id_author', $data['id_author'] );
+        return $result->execute();
     }
     public static function deleteElement($id){
         $db=Db::getConnection();
         $result = $db->prepare("DELETE FROM `mvc` WHERE `id` = :id");
         $result->bindParam(':id', $id );
-        return $result->execute();;
+        return $result->execute();
     }
     public static function insertElement($data, $fileName){
         $db=Db::getConnection();
@@ -54,9 +55,10 @@ class Admin
         $segments = explode('/', $string);
         return end($segments);
     }
-    public static function getAuthors(){
+    public static function getAuthors($order, $sort){
         $db=Db::getConnection();
-        $result = $db->query('SELECT * from authors ');
+        $sortQuery = " ORDER BY ".$order .' '.$sort;
+        $result = $db->query("SELECT * from authors ".$sortQuery);
         $arrayAuthors = $result->fetchAll(PDO::FETCH_ASSOC);
         return $arrayAuthors;
 

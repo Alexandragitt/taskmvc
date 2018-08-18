@@ -17,8 +17,18 @@ header('Content-Type: text/html; charset=utf-8'); ?>
 </form>
 <table>
     <tr>
-        <th>ID </th>
-        <th>Name</th>
+        <th><a href = '?admin=1&order=id&sort_by=<?php  if(empty($_GET['sort_by']) || $_GET['sort_by'] == 'asc'){
+                echo 'desc';
+            } else{
+                echo 'asc';
+            } ?>'>ID</a> </th>
+        <th>
+                <a href = '?admin=1&order=name&sort_by=<?php  if(empty($_GET['sort_by']) || $_GET['sort_by'] == 'asc'){
+                   echo 'desc';
+                } else{
+                    echo 'asc';
+                } ?>'>Name</a>
+       </th>
 
     </tr>
     <?php foreach ($arrayAuthors as $key=> $author):?>
@@ -29,7 +39,7 @@ header('Content-Type: text/html; charset=utf-8'); ?>
     <?php endforeach; ?>
 </table>
 
-<table >
+
 <p> Создать задачу:</p>
 <form action="/index.php?admin=1"  enctype='multipart/form-data' method="post">
     <p>
@@ -50,7 +60,7 @@ header('Content-Type: text/html; charset=utf-8'); ?>
     <p>
         <input type="submit" name="" value="Добавить">
     </p></form>
-</table>
+
 <table>
     <tr>
         <th>ID </th>

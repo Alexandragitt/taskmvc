@@ -16,6 +16,7 @@ class SiteController
         // reset($newCountTasks);
         $countPage = $newCountTasks[0] / self::COUNTELEMENT;
         $countPage = ceil($countPage);
+
         $arrayTasks = Site::getArrayTasks($page);
         $arrayAuthors = Site::getAuthors();
         require_once('/../views/Site/index.php');
@@ -27,10 +28,9 @@ class SiteController
                     $newTask[$key] = $value;
                 }
                 $fileName = UploadForm::hash($_FILES["file"]["name"]);
-                if (UploadForm::uploadFile($_FILES, $fileName) ){
-                   if(Site::insertTask($newTask, $fileName) ) {
+                if (UploadForm::uploadFile($_FILES, $fileName) && Site::insertTask($newTask, $fileName)){
                     echo 'Создана задача';
-                }}
+                }
                  else {
                     echo 'Не удалось осуществить создание задачи';
                 }}
@@ -39,6 +39,6 @@ class SiteController
             }
         }
 
-    }
+
 
 }

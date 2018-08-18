@@ -7,9 +7,17 @@ class AdminController
 {
     public function actionIndex(){
         $newTask = [];
+        if(!empty($_GET['order']) &&  !empty($_GET['sort_by'])){
+            $order = $_GET['order'];
+            $sortName= $_GET['sort_by'];
+        }else{
+            $order = 'id';
+            $sortName= 'asc';
+        }
         $arrayTasks=Admin::getArrayTasks();
-        $arrayAuthors =Admin::getAuthors();
+        $arrayAuthors =Admin::getAuthors($order, $sortName);
         require_once ('/../views/admin/index.php');
+
         if (!empty($_POST) and !empty($_FILES)) {
             if(UploadForm::checkExtension($_FILES["file"]["type"])){
                 foreach ($_POST as $key => $value) {
@@ -43,8 +51,7 @@ class AdminController
                 $newTask[$key] = $value;
             }
             $fileName = UploadForm::hash($_FILES["file"]["name"]);
-            if (UploadForm::uploadFile($_FILES, $fileName)) {
-                Admin::updateElement( $newTask, $fileName);
+            if (UploadForm::uploadFile($_FILES, $fileName) && Admin::updateElement( $newTask, $fileName)) {
                 echo 'Изменена задача';
             } else {
                 echo 'Не удалось осуществить изменение задачи';
