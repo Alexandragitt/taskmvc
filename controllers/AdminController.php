@@ -25,7 +25,7 @@ class AdminController
                     $newTask[$key] = $value;
                 }
                     $fileName = UploadForm::hash($_FILES["file"]["name"]);
-                    if (UploadForm::uploadFile($_FILES, $fileName) and Admin::insertElement($newTask, $fileName)) {
+                    if (UploadForm::uploadFile($_FILES, $fileName) && Admin::insertElement($newTask, $fileName)) {
                         echo 'Создана задача';
                     } else {
                            echo 'Не удалось осуществить создание задачи';
