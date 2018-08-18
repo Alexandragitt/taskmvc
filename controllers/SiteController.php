@@ -27,7 +27,7 @@ class SiteController
                     $newTask[$key] = $value;
                 }
                 $fileName = UploadForm::hash($_FILES["file"]["name"]);
-                if (UploadForm::uploadFile($_FILES, $fileName)){
+                if (UploadForm::uploadFile($_FILES, $fileName) ){
                    if(Site::insertTask($newTask, $fileName) ) {
                     echo 'Создана задача';
                 }}

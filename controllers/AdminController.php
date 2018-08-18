@@ -8,6 +8,7 @@ class AdminController
     public function actionIndex(){
         $newTask = [];
         $arrayTasks=Admin::getArrayTasks();
+        $arrayAuthors =Admin::getAuthors();
         require_once ('/../views/admin/index.php');
         if (!empty($_POST) and !empty($_FILES)) {
             if(UploadForm::checkExtension($_FILES["file"]["type"])){
@@ -16,21 +17,23 @@ class AdminController
                     $newTask[$key] = $value;
                 }
                     $fileName = UploadForm::hash($_FILES["file"]["name"]);
-                    if (UploadForm::uploadFile($_FILES, $fileName)) {
-                        Admin::insertElement($newTask, $fileName);
+                    if (UploadForm::uploadFile($_FILES, $fileName) and Admin::insertElement($newTask, $fileName)) {
                         echo 'Создана задача';
                     } else {
-                        echo 'Не удалось осуществить создание задачи';
-                    }
-                }
-          else{
+                           echo 'Не удалось осуществить создание задачи';
+                       }
+
+                    } else{
                 echo 'Нужно выбрать картинку с форматом .jpeg, .png';
+                }
+            }
         }
-    }}
+
 
     public function actionEdit($id){
         $newTask = [];
         $elements = Admin::getElementByID($id);
+        $arrayAuthors =Admin::getAuthors();
         $elements = reset($elements);
         require_once ('/../views/admin/edit.php');
         if (!empty($_POST) and !empty($_FILES)) {
