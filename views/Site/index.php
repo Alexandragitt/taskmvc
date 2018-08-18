@@ -18,16 +18,26 @@
         <label>Введите текст</label>
         <input type="text" name="text" >
     </p>
+
+
+   <select name="id_author">
+       <option selected disabled>Выберите автора</option>
+       <?php foreach ($arrayAuthors as $key=> $author):?>
+       <option  value="<?php echo $author['id'];?>"><?php echo $author['name'];?></option>
+       <?php endforeach; ?>
+   </select>
     <input name="file" type="file"  >
     <p>
         <input type="submit" name="" value="Добавить">
-    </p></form>
+    </p>
+</form>
 <table>
     <tr>
         <th>ID </th>
         <th>Email</th>
         <th>Text</th>
         <th>Image</th>
+        <th>Author</th>
     </tr>
 <?php foreach ($arrayTasks as $key=> $array):?>
     <tr>
@@ -35,6 +45,7 @@
         <td> <p class="title"><?php echo $array['email'];?></p></td>
         <td> <p class="title"><?php echo $array['text'];?></p></td>
         <td> <img src="/uploads/<?php echo $array['img'];?>.jpeg" width="100" height="100" alt="картинка"></td>
+        <td> <p class="title"><?php echo $array['name'];?></p></td>
     </tr>
 <?php endforeach; ?>
 
