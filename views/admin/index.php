@@ -9,6 +9,38 @@ header('Content-Type: text/html; charset=utf-8'); ?>
         }
     </style></head>
 <body>
+
+<form action="/index.php/admin/author" method="post">
+    <label>Введите имя автора:</label>
+    <input type="text" name="author" ><input type="submit" name="" value="Создать автора">
+</p>
+</form>
+<table>
+    <tr>
+        <th><a href = '?admin=1&order=id&sort_by=<?php  if(empty($_GET['sort_by']) || $_GET['sort_by'] == 'asc'){
+                echo 'desc';
+            } else{
+                echo 'asc';
+            } ?>'>ID</a> </th>
+        <th>
+                <a href = '?admin=1&order=name&sort_by=<?php  if(empty($_GET['sort_by']) || $_GET['sort_by'] == 'asc'){
+                   echo 'desc';
+                } else{
+                    echo 'asc';
+                } ?>'>Name</a>
+       </th>
+
+    </tr>
+    <?php foreach ($arrayAuthors as $key=> $author):?>
+        <tr>
+            <td> <p ><?php echo $author['id'];?></p></td>
+            <td> <p ><?php echo $author['name'];?></p></td>
+        </tr>
+    <?php endforeach; ?>
+</table>
+
+
+<p> Создать задачу:</p>
 <form action="/index.php?admin=1"  enctype='multipart/form-data' method="post">
     <p>
         <label>Введите email </label>
@@ -18,17 +50,24 @@ header('Content-Type: text/html; charset=utf-8'); ?>
         <label>Введите текст</label>
         <input type="text" name="text" >
     </p>
+    <select name="id_author">
+        <option selected disabled>Выберите автора</option>
+        <?php foreach ($arrayAuthors as $key=> $author):?>
+            <option  value="<?php echo $author['id'];?>"><?php echo $author['name'];?></option>
+        <?php endforeach; ?>
+    </select>
     <input name="file" type="file"  >
     <p>
         <input type="submit" name="" value="Добавить">
     </p></form>
-</table>
+
 <table>
     <tr>
         <th>ID </th>
         <th>Email</th>
         <th>Text</th>
         <th>Image</th>
+        <th>Author</th>
         <th>Action</th>
     </tr>
     <?php foreach ($arrayTasks as $key=> $array):?>
@@ -37,6 +76,7 @@ header('Content-Type: text/html; charset=utf-8'); ?>
             <td> <p ><?php echo $array['email'];?></p></td>
             <td> <p ><?php echo $array['text'];?></p></td>
             <td>  <img src="/uploads/<?php echo $array['img'];?>.jpeg" width="100" height="100" alt="картинка"></td>
+            <td> <p class="title"><?php echo $array['name'];?></p></td>
             <td> <a href = 'index.php/admin/edit/<?php echo $array['id'];?>'>Редактировать</a>
 
                 <form action='/index.php/admin/delete/<?php echo $array['id'];?>' method='post'>

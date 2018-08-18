@@ -5,8 +5,6 @@ require_once ('/models/UploadString.php');
 class SiteController
 {
     const COUNTELEMENT = 3;
-    protected $typesElement = ['jpeg', 'jpg', 'png'];
-
 
     public function actionIndex($page = 1)
     {
@@ -18,26 +16,29 @@ class SiteController
         // reset($newCountTasks);
         $countPage = $newCountTasks[0] / self::COUNTELEMENT;
         $countPage = ceil($countPage);
+
         $arrayTasks = Site::getArrayTasks($page);
+        $arrayAuthors = Site::getAuthors();
         require_once('/../views/Site/index.php');
         if (!empty($_POST) and !empty($_FILES)) {
+            $typeImage= Site::explodeType($_FILES["file"]["type"]);
             if (UploadForm::checkExtension($_FILES["file"]["type"])) {
                 foreach ($_POST as $key => $value) {
                     $value = UploadString::cutString($value);
                     $newTask[$key] = $value;
                 }
                 $fileName = UploadForm::hash($_FILES["file"]["name"]);
-                if (UploadForm::uploadFile($_FILES, $fileName)) {
-                    Site::insertTask($newTask, $fileName);
+                if (UploadForm::uploadFile($_FILES, $fileName) && Site::insertTask($newTask, $fileName)){
                     echo 'Создана задача';
-                } else {
-                    echo 'Не удалось осуществить создание задачи';
                 }
-            } else {
+                 else {
+                    echo 'Не удалось осуществить создание задачи';
+                }}
+            else {
                 echo 'Нужно выбрать картинку с форматом .jpeg, .png';
             }
         }
 
-    }
+
 
 }

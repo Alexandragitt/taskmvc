@@ -10,11 +10,16 @@
 
           <p><input type="text" name="email"  value="<?php echo $elements['email']; ?>"></p>
         <p>   <input type="text" name="text" value="<?php echo $elements['text']; ?>"></p>
-         <img src="/uploads/<?php echo $elements['img'];?>.jpeg" width="100" height="100" alt="картинка">
-
+          <select name="id_author">
+            <option selected disabled>Выберите автора</option>
+            <?php foreach ($arrayAuthors as $key=> $author):?>
+                <option  value="<?php echo $author['id'];?>"><?php echo $author['name'];?></option>
+            <?php endforeach; ?>
+        </select>
         <input name="file" type="file"  >
+        <p>   <img src="/uploads/<?php echo $elements['img'];?>.jpeg" width="100" height="100" alt="картинка"></p>
         <p>       <button type='submit' value ='<?php echo $elements['id'];?>'>Сохранить</button></p>
-    </form>
+          </form>
         <form action='/index.php/admin/delete/<?php echo $elements['id'];?>' method='post'>
             <button type='submit' value ='<?php echo $elements['id'];?>'>Удалить</button>
         </form>
