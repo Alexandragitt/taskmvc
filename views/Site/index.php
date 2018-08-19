@@ -21,12 +21,12 @@
     </p>
 
 
-   <select name="id_author">
-       <option selected disabled>Выберите автора</option>
-       <?php foreach ($arrayAuthors as $key => $author):?>
-       <option  value="<?php echo $author['id'];?>"><?php echo $author['name'];?></option>
-       <?php endforeach; ?>
-   </select>
+   <select name="id_author[]"  multiple>
+        <option selected disabled>Выберите автора</option>
+        <?php foreach ($arrayAuthors as $key => $author):?>
+            <option  value="<?php echo $author['id'];?>"><?php echo $author['name'];?></option>
+        <?php endforeach; ?>
+    </select>
     <input name="file" type="file"  >
     <p>
         <input type="submit" name="" value="Добавить">

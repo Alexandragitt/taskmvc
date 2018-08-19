@@ -1,6 +1,6 @@
 <?php
 require_once ('/models/Admin.php');
-
+require_once ('/models/Author.php');
 require_once ('/models/UploadString.php');
 require_once ('/models/UploadForm.php');
 class AdminController
@@ -15,7 +15,7 @@ class AdminController
             $sortName= 'asc';
         }
         $arrayTasks=Admin::getArrayTasks();
-        $arrayAuthors =Admin::getAuthors($order, $sortName);
+        $arrayAuthors =Author::getAuthors($order, $sortName);
         require_once ('/../views/admin/index.php');
 
         if (!empty($_POST) and !empty($_FILES)) {
@@ -43,7 +43,7 @@ class AdminController
         $order = 'id';
         $sortName= 'asc';
         $elements = Admin::getElementByID($id);
-        $arrayAuthors = Admin::getAuthors($order, $sortName);
+        $arrayAuthors = Author::getAuthors($order, $sortName);
         $elements = reset($elements);
         require_once ('/../views/admin/edit.php');
         if (!empty($_POST) and !empty($_FILES)) {
@@ -72,7 +72,7 @@ class AdminController
     public function actionAuthor(){
         if(!empty($_POST)){
             $nameAuthor = UploadString::cutString($_POST['author']);
-        if(Admin::createAuthor($nameAuthor)) {
+        if(Author::createAuthor($nameAuthor)) {
             header("Location: http://taskmvc/index.php?admin=1");
         }
     }}
