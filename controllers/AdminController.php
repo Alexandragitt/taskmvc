@@ -40,8 +40,10 @@ class AdminController
 
     public function actionEdit($id){
         $newTask = [];
+        $order = 'id';
+        $sortName= 'asc';
         $elements = Admin::getElementByID($id);
-        $arrayAuthors =Admin::getAuthors();
+        $arrayAuthors = Admin::getAuthors($order, $sortName);
         $elements = reset($elements);
         require_once ('/../views/admin/edit.php');
         if (!empty($_POST) and !empty($_FILES)) {
@@ -69,7 +71,7 @@ class AdminController
     }
     public function actionAuthor(){
         if(!empty($_POST)){
-            $nameAuthor=UploadString::cutString( $_POST['author']);
+            $nameAuthor = UploadString::cutString($_POST['author']);
         if(Admin::createAuthor($nameAuthor)) {
             header("Location: http://taskmvc/index.php?admin=1");
         }

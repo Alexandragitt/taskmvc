@@ -11,6 +11,5 @@ return array(
     'index.php/([0-9]+)'=> 'site/index/$1',
     'index.php'=> 'site/index'
 
-// ТАК ДОЛЖНО РАБОТАТЬ? и хули с роутингом проебала?
 
 );
