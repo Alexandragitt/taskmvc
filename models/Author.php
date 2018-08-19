@@ -23,13 +23,23 @@ class Author
         return $arrayAuthors;
 
     }
-    public static function insertRelationTaskAuthor($id_task, $id_author){
+    public static function insertRelationTaskAuthor($id_authors){
         $db=Db::getConnection();
-        $new= $db->prepare("INSERT INTO task_author (id_author, id_mvc) 
-                            VALUES(:id_author, :$id_author)");
-        $new->bindParam(':id_author', $id_author);
-        $new->bindParam(':id_mvc', $id_mvc);
-        return $new->execute();
+        $taskMaxId = $db->query("SELECT max(id) from mvc ");
+        $taskID =  $taskMaxId->fetch();
+        $taskID = (int) reset($taskID);
+        $id_authors = reset($id_authors);
+        foreach ($id_authors as $key => $val) {
+            $val = (int) $val;
+            $new = $db->prepare("INSERT INTO task_author (id_author, id_mvc) 
+                            VALUES(:id_author, :id_mvc)");
+            $new->bindParam(':id_author', $val);
+            $new->bindParam(':id_mvc', $taskID);
+            $result = $new->execute();
+            if($key == 2 ){
+                break;
+            }
+        }
 
 }
 }

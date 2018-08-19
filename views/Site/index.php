@@ -38,7 +38,7 @@
         <th>Email</th>
         <th>Text</th>
         <th>Image</th>
-        <th>Author</th>
+        <th>Authors</th>
     </tr>
 <?php foreach ($arrayTasks as $key=> $array):?>
     <tr>

@@ -17,7 +17,6 @@ class AdminController
         $arrayTasks=Admin::getArrayTasks();
         $arrayAuthors =Author::getAuthors($order, $sortName);
         require_once ('/../views/admin/index.php');
-
         if (!empty($_POST) and !empty($_FILES)) {
             if(UploadForm::checkExtension($_FILES["file"]["type"])){
                 foreach ($_POST as $key => $value) {
@@ -30,7 +29,6 @@ class AdminController
                     } else {
                            echo 'Не удалось осуществить создание задачи';
                        }
-
                     } else{
                 echo 'Нужно выбрать картинку с форматом .jpeg, .png';
                 }
