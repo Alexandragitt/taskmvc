@@ -23,7 +23,7 @@
 
    <select name="id_author">
        <option selected disabled>Выберите автора</option>
-       <?php foreach ($arrayAuthors as $key=> $author):?>
+       <?php foreach ($arrayAuthors as $key => $author):?>
        <option  value="<?php echo $author['id'];?>"><?php echo $author['name'];?></option>
        <?php endforeach; ?>
    </select>
