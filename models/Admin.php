@@ -55,21 +55,7 @@ class Admin
         $segments = explode('/', $string);
         return end($segments);
     }
-    public static function getAuthors($order, $sort){
-        $db=Db::getConnection();
-        $sortQuery = " ORDER BY ".$order .' '.$sort;
-        $result = $db->query("SELECT * from authors ".$sortQuery);
-        $arrayAuthors = $result->fetchAll(PDO::FETCH_ASSOC);
-        return $arrayAuthors;
 
-    }
-    public static function createAuthor($string){
-        $db=Db::getConnection();
-        $new= $db->prepare("INSERT INTO authors (name) 
-                            VALUES(:name)");
-        $new->bindParam(':name', $string);
-        return $new->execute();
-    }
 
 
 
