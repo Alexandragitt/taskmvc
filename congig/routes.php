@@ -9,7 +9,9 @@ return array(
     'site'=> 'site/index',
     'index.php/site/([0-9]+)'=> 'site/index/$1',
     'index.php/([0-9]+)'=> 'site/index/$1',
-    'index.php'=> 'site/index'
+   // 'index.php'=> 'site/index',
+    //uploadFile
+    'index.php/admin/upload'=> 'admin/upload'
 
 
 );
