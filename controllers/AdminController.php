@@ -3,6 +3,7 @@ require_once ('/models/Admin.php');
 require_once ('/models/Author.php');
 require_once ('/models/UploadString.php');
 require_once ('/models/UploadForm.php');
+require_once ('/models/File.php');
 class AdminController
 {
     public function actionIndex(){
@@ -34,8 +35,6 @@ class AdminController
                 }
             }
         }
-
-
     public function actionEdit($id){
         $newTask = [];
         $order = 'id';
@@ -74,4 +73,16 @@ class AdminController
             header("Location: http://taskmvc/index.php?admin=1");
         }
     }}
+    public function actionUpload(){
+        require_once ('/../views/file/index.php');
+        if(!empty($_FILES)){
+            if(File::checkExtension($_FILES)){
+                $data= File::getDataFile($_FILES);
+               File::insertData($data);
+            } else{
+                echo 'Выберите файл .csv';
+            }
+        }
+
+    }
 }
